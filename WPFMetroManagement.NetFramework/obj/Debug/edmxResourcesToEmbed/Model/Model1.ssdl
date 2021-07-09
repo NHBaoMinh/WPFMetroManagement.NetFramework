@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EMetroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Company">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" MaxLength="200" />
+    <Property Name="websiteAddress" Type="nvarchar" MaxLength="200" />
+    <Property Name="addressCompany" Type="nvarchar" MaxLength="100" />
+    <Property Name="phone" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Line">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idCompany" Type="int" Nullable="false" />
+    <Property Name="lineName" Type="nvarchar" MaxLength="100" />
+    <Property Name="lineType" Type="nvarchar" MaxLength="50" />
+    <Property Name="lineStartId" Type="int" Nullable="false" />
+    <Property Name="lineEndId" Type="int" Nullable="false" />
+    <Property Name="stops" Type="nvarchar" MaxLength="100" />
+    <Property Name="openTime" Type="nvarchar" MaxLength="50" />
+    <Property Name="closeTime" Type="nvarchar" MaxLength="50" />
+    <Property Name="awTime" Type="nvarchar" MaxLength="50" />
+    <Property Name="statusLine" Type="nvarchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Station">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="stationName" Type="nvarchar(max)" />
+    <Property Name="statusStatus" Type="nvarchar" MaxLength="100" />
+    <Property Name="locationDescription" Type="nvarchar(max)" />
+    <Property Name="map" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Ticket">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tType" Type="nvarchar" MaxLength="50" />
+    <Property Name="idRoute" Type="int" Nullable="false" />
+    <Property Name="registerDate" Type="date" />
+    <Property Name="expiryDate" Type="date" />
+    <Property Name="price" Type="int" />
+    <Property Name="isUsed" Type="bit" />
+    <Property Name="isSell" Type="bit" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userName" Type="nvarchar" MaxLength="100" />
+    <Property Name="userPass" Type="nvarchar(max)" />
+    <Property Name="idCompany" Type="int" />
+  </EntityType>
+  <Association Name="FK__Line__idCompany__2C3393D0">
+    <End Role="Company" Type="Self.Company" Multiplicity="1" />
+    <End Role="Line" Type="Self.Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Line">
+        <PropertyRef Name="idCompany" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Line__lineEndId__300424B4">
+    <End Role="Station" Type="Self.Station" Multiplicity="1" />
+    <End Role="Line" Type="Self.Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Station">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Line">
+        <PropertyRef Name="lineEndId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Line__lineStartI__2F10007B">
+    <End Role="Station" Type="Self.Station" Multiplicity="1" />
+    <End Role="Line" Type="Self.Line" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Station">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Line">
+        <PropertyRef Name="lineStartId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Ticket__idRoute__2D27B809">
+    <End Role="Line" Type="Self.Line" Multiplicity="1" />
+    <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Line">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Ticket">
+        <PropertyRef Name="idRoute" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__idCompany__2E1BDC42">
+    <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Company">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="idCompany" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="EMetroModelStoreContainer">
+    <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Line" EntityType="Self.Line" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Station" EntityType="Self.Station" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Line__idCompany__2C3393D0" Association="Self.FK__Line__idCompany__2C3393D0">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Line" EntitySet="Line" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Line__lineEndId__300424B4" Association="Self.FK__Line__lineEndId__300424B4">
+      <End Role="Station" EntitySet="Station" />
+      <End Role="Line" EntitySet="Line" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Line__lineStartI__2F10007B" Association="Self.FK__Line__lineStartI__2F10007B">
+      <End Role="Station" EntitySet="Station" />
+      <End Role="Line" EntitySet="Line" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Ticket__idRoute__2D27B809" Association="Self.FK__Ticket__idRoute__2D27B809">
+      <End Role="Line" EntitySet="Line" />
+      <End Role="Ticket" EntitySet="Ticket" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__idCompany__2E1BDC42" Association="Self.FK__Users__idCompany__2E1BDC42">
+      <End Role="Company" EntitySet="Company" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,20 @@
+﻿WPFMetroManagement.NetFramework
+
+
+winexe
+C#
+.cs
+E:\UIT\Software Engineering\Project\EMetroManagement\WPFMetroManagement.NetFramework\WPFMetroManagement.NetFramework\obj\Debug\
+WPFMetroManagement.NetFramework
+none
+false
+DEBUG;TRACE
+E:\UIT\Software Engineering\Project\EMetroManagement\WPFMetroManagement.NetFramework\WPFMetroManagement.NetFramework\App.xaml
+15404286437
+2-1556844510
+40-1792414522
+29-850800781
+Resources\Color.xaml;Resources\MainResource.xaml;UserControls\AboutUsUC.xaml;UserControls\AdminTicketViewUC.xaml;UserControls\CompanyUC.xaml;UserControls\ContactUC.xaml;UserControls\ControlBarUC.xaml;UserControls\DefaultMainLoadUC.xaml;UserControls\LineUC.xaml;UserControls\StationUC.xaml;UserControls\TicketSellingReportUC.xaml;UserControls\TicketSellingUC.xaml;UserControls\TicketsView.xaml;Views\LoginWindow.xaml;Views\MainWindow.xaml;
+
+False
+

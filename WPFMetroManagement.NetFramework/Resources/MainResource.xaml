@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:System.Windows.Resources;assembly=PresentationFramework"
+                    xmlns:viewmodel="clr-namespace:WPFMetroManagement.NetFramework.ViewModels">
+    
+    <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
+    <viewmodel:MainWindowViewModel x:Key="MainWdVM"></viewmodel:MainWindowViewModel>
+    <viewmodel:StationViewModel x:Key="StationVM"></viewmodel:StationViewModel>
+    <viewmodel:DefaultMainLoadViewModel x:Key="DefaultLoadVM"></viewmodel:DefaultMainLoadViewModel>
+    <viewmodel:CompanyViewModel x:Key="CompanyVM"></viewmodel:CompanyViewModel>
+    <viewmodel:LineViewModel x:Key="LineVM"></viewmodel:LineViewModel>
+    <viewmodel:TicketSellingViewModel x:Key="TicketVM"></viewmodel:TicketSellingViewModel>
+    <viewmodel:ViewTicketViewModel x:Key="ViewTicketVM"></viewmodel:ViewTicketViewModel>
+    <viewmodel:AdminViewTicketViewModel x:Key="AdminViewTicketVM"></viewmodel:AdminViewTicketViewModel>
+    <viewmodel:TicketSellingReportViewModel x:Key="TicketReportVM"></viewmodel:TicketSellingReportViewModel>
+</ResourceDictionary>

@@ -1,0 +1,438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="EMetroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="200" />
+          <Property Name="websiteAddress" Type="nvarchar" MaxLength="200" />
+          <Property Name="addressCompany" Type="nvarchar" MaxLength="100" />
+          <Property Name="phone" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Line">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idCompany" Type="int" Nullable="false" />
+          <Property Name="lineName" Type="nvarchar" MaxLength="100" />
+          <Property Name="lineType" Type="nvarchar" MaxLength="50" />
+          <Property Name="lineStartId" Type="int" Nullable="false" />
+          <Property Name="lineEndId" Type="int" Nullable="false" />
+          <Property Name="stops" Type="nvarchar" MaxLength="100" />
+          <Property Name="openTime" Type="nvarchar" MaxLength="50" />
+          <Property Name="closeTime" Type="nvarchar" MaxLength="50" />
+          <Property Name="awTime" Type="nvarchar" MaxLength="50" />
+          <Property Name="statusLine" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="stationName" Type="nvarchar(max)" />
+          <Property Name="statusStatus" Type="nvarchar" MaxLength="100" />
+          <Property Name="locationDescription" Type="nvarchar(max)" />
+          <Property Name="map" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tType" Type="nvarchar" MaxLength="50" />
+          <Property Name="idRoute" Type="int" Nullable="false" />
+          <Property Name="registerDate" Type="date" />
+          <Property Name="expiryDate" Type="date" />
+          <Property Name="price" Type="int" />
+          <Property Name="isUsed" Type="bit" />
+          <Property Name="isSell" Type="bit" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userName" Type="nvarchar" MaxLength="100" />
+          <Property Name="userPass" Type="nvarchar(max)" />
+          <Property Name="idCompany" Type="int" />
+        </EntityType>
+        <Association Name="FK__Line__idCompany__2C3393D0">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Line" Type="Self.Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Line">
+              <PropertyRef Name="idCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Line__lineEndId__300424B4">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="Line" Type="Self.Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Line">
+              <PropertyRef Name="lineEndId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Line__lineStartI__2F10007B">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="Line" Type="Self.Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Line">
+              <PropertyRef Name="lineStartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__idRoute__2D27B809">
+          <End Role="Line" Type="Self.Line" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Line">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="idRoute" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__idCompany__2E1BDC42">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="idCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EMetroModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Line" EntityType="Self.Line" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Station" EntityType="Self.Station" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Line__idCompany__2C3393D0" Association="Self.FK__Line__idCompany__2C3393D0">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Line" EntitySet="Line" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Line__lineEndId__300424B4" Association="Self.FK__Line__lineEndId__300424B4">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Line" EntitySet="Line" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Line__lineStartI__2F10007B" Association="Self.FK__Line__lineStartI__2F10007B">
+            <End Role="Station" EntitySet="Station" />
+            <End Role="Line" EntitySet="Line" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__idRoute__2D27B809" Association="Self.FK__Ticket__idRoute__2D27B809">
+            <End Role="Line" EntitySet="Line" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__idCompany__2E1BDC42" Association="Self.FK__Users__idCompany__2E1BDC42">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="EMetroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="websiteAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="addressCompany" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lines" Relationship="Self.FK__Line__idCompany__2C3393D0" FromRole="Company" ToRole="Line" />
+          <NavigationProperty Name="Users" Relationship="Self.FK__Users__idCompany__2E1BDC42" FromRole="Company" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Line">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idCompany" Type="Int32" Nullable="false" />
+          <Property Name="lineName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="lineType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lineStartId" Type="Int32" Nullable="false" />
+          <Property Name="lineEndId" Type="Int32" Nullable="false" />
+          <Property Name="stops" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="openTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="closeTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="awTime" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="statusLine" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__Line__idCompany__2C3393D0" FromRole="Line" ToRole="Company" />
+          <NavigationProperty Name="Station" Relationship="Self.FK__Line__lineEndId__300424B4" FromRole="Line" ToRole="Station" />
+          <NavigationProperty Name="Station1" Relationship="Self.FK__Line__lineStartI__2F10007B" FromRole="Line" ToRole="Station" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK__Ticket__idRoute__2D27B809" FromRole="Line" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Station">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="stationName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="statusStatus" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="locationDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="map" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lines" Relationship="Self.FK__Line__lineEndId__300424B4" FromRole="Station" ToRole="Line" />
+          <NavigationProperty Name="Lines1" Relationship="Self.FK__Line__lineStartI__2F10007B" FromRole="Station" ToRole="Line" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idRoute" Type="Int32" Nullable="false" />
+          <Property Name="registerDate" Type="DateTime" Precision="0" />
+          <Property Name="expiryDate" Type="DateTime" Precision="0" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="isUsed" Type="Boolean" />
+          <Property Name="isSell" Type="Boolean" />
+          <NavigationProperty Name="Line" Relationship="Self.FK__Ticket__idRoute__2D27B809" FromRole="Ticket" ToRole="Line" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="userPass" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="idCompany" Type="Int32" />
+          <NavigationProperty Name="Company" Relationship="Self.FK__Users__idCompany__2E1BDC42" FromRole="Users" ToRole="Company" />
+        </EntityType>
+        <Association Name="FK__Line__idCompany__2C3393D0">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Line" Type="Self.Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Line">
+              <PropertyRef Name="idCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Users__idCompany__2E1BDC42">
+          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
+          <End Role="Users" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="idCompany" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Line__lineEndId__300424B4">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="Line" Type="Self.Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Line">
+              <PropertyRef Name="lineEndId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Line__lineStartI__2F10007B">
+          <End Role="Station" Type="Self.Station" Multiplicity="1" />
+          <End Role="Line" Type="Self.Line" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Station">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Line">
+              <PropertyRef Name="lineStartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Ticket__idRoute__2D27B809">
+          <End Role="Line" Type="Self.Line" Multiplicity="1" />
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Line">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="idRoute" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EMetroEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="Lines" EntityType="Self.Line" />
+          <EntitySet Name="Stations" EntityType="Self.Station" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Line__idCompany__2C3393D0" Association="Self.FK__Line__idCompany__2C3393D0">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Line" EntitySet="Lines" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__idCompany__2E1BDC42" Association="Self.FK__Users__idCompany__2E1BDC42">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Line__lineEndId__300424B4" Association="Self.FK__Line__lineEndId__300424B4">
+            <End Role="Station" EntitySet="Stations" />
+            <End Role="Line" EntitySet="Lines" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Line__lineStartI__2F10007B" Association="Self.FK__Line__lineStartI__2F10007B">
+            <End Role="Station" EntitySet="Stations" />
+            <End Role="Line" EntitySet="Lines" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Ticket__idRoute__2D27B809" Association="Self.FK__Ticket__idRoute__2D27B809">
+            <End Role="Line" EntitySet="Lines" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="EMetroModelStoreContainer" CdmEntityContainer="EMetroEntities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="EMetroModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="websiteAddress" ColumnName="websiteAddress" />
+                <ScalarProperty Name="addressCompany" ColumnName="addressCompany" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lines">
+            <EntityTypeMapping TypeName="EMetroModel.Line">
+              <MappingFragment StoreEntitySet="Line">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="idCompany" ColumnName="idCompany" />
+                <ScalarProperty Name="lineName" ColumnName="lineName" />
+                <ScalarProperty Name="lineType" ColumnName="lineType" />
+                <ScalarProperty Name="lineStartId" ColumnName="lineStartId" />
+                <ScalarProperty Name="lineEndId" ColumnName="lineEndId" />
+                <ScalarProperty Name="stops" ColumnName="stops" />
+                <ScalarProperty Name="openTime" ColumnName="openTime" />
+                <ScalarProperty Name="closeTime" ColumnName="closeTime" />
+                <ScalarProperty Name="awTime" ColumnName="awTime" />
+                <ScalarProperty Name="statusLine" ColumnName="statusLine" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stations">
+            <EntityTypeMapping TypeName="EMetroModel.Station">
+              <MappingFragment StoreEntitySet="Station">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="stationName" ColumnName="stationName" />
+                <ScalarProperty Name="statusStatus" ColumnName="statusStatus" />
+                <ScalarProperty Name="locationDescription" ColumnName="locationDescription" />
+                <ScalarProperty Name="map" ColumnName="map" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="EMetroModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="EMetroModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="tType" ColumnName="tType" />
+                <ScalarProperty Name="idRoute" ColumnName="idRoute" />
+                <ScalarProperty Name="registerDate" ColumnName="registerDate" />
+                <ScalarProperty Name="expiryDate" ColumnName="expiryDate" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="isUsed" ColumnName="isUsed" />
+                <ScalarProperty Name="isSell" ColumnName="isSell" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="EMetroModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="userPass" ColumnName="userPass" />
+                <ScalarProperty Name="idCompany" ColumnName="idCompany" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

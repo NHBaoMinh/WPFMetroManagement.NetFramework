@@ -1,0 +1,124 @@
+﻿<UserControl x:Class="WPFMetroManagement.NetFramework.UserControls.DefaultMainLoadUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WPFMetroManagement.NetFramework.UserControls"
+             mc:Ignorable="d"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Foreground="White"
+             Background="{StaticResource GreenNavy}"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             DataContext="{StaticResource DefaultLoadVM}">
+
+    <ScrollViewer Margin="5"
+                  Padding="10 0 10 0">
+        <ListView x:Name="lvLinesMainwindowUC"
+                  ItemsSource="{Binding ListLine,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+
+                    <StackPanel Orientation="Horizontal"
+                                Margin="15">
+                        <Border Height="160"
+                                Width="500"
+                                CornerRadius="7"
+                                Background="LightGray">
+                            <DockPanel LastChildFill="True">
+                                <Border DockPanel.Dock="Top"
+                                        Width="500"
+                                        Height="20"
+                                        CornerRadius="7 7 0 0"
+                                        Background="#F2685E">
+                                    <TextBlock HorizontalAlignment="Left"
+                                               Foreground="White"
+                                               FontSize="12"
+                                               Margin="3"
+                                               Text="{Binding idCompany}">
+                                           
+                                    </TextBlock>
+                                </Border>
+
+                                <Border DockPanel.Dock="Bottom"
+                                        Width="500"
+                                        Height="20"
+                                        CornerRadius="0 0 7 7"
+                                        Background="#F2685E"></Border>
+
+                                <TextBlock DockPanel.Dock="Top"
+                                           Margin="50 10 0 0"
+                                           Foreground="Black"
+                                           FontSize="15"
+                                           FontWeight="Bold"
+                                           HorizontalAlignment="Left"
+                                           Text="{Binding lineName}" />
+
+                                <Image Source="/UserControls/QRcodeSource.svg.png"
+                                       Margin="28 0 0 0">
+                                </Image>
+
+                                <TextBlock Foreground="Black"
+                                           DockPanel.Dock="Top"
+                                           TextAlignment="Center"
+                                           Margin="5"
+                                           FontSize="15"
+                                           Text="INFORMATION" />
+
+                                <StackPanel DockPanel.Dock="Top"
+                                            Margin="5"
+                                            Orientation="Horizontal">
+                                    <TextBlock Foreground="Black"
+                                               TextAlignment="Left"
+                                               Margin="0 3.5"
+                                               Text="Line Type: " />
+                                    <TextBlock Foreground="Black"
+                                               TextAlignment="Left"
+                                               Margin="0 3.5"
+                                               Text="{Binding lineType}" />
+
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Margin="5"
+                                                Orientation="Horizontal">
+                                        <TextBlock Foreground="Black"
+                                                   TextAlignment="Left"
+                                                   Margin="0 3.5"
+                                                   Text="From: " />
+                                        <TextBlock Foreground="Black"
+                                                   TextAlignment="Left"
+                                                   Margin="0 3.5"
+                                                   Text="{Binding Station1.stationName}" />
+                                        <TextBlock Foreground="Black"
+                                                   TextAlignment="Left"
+                                                   Margin="20 3.5"
+                                                   Text="------------>" />
+                                    </StackPanel>
+                                    <StackPanel Margin="5"
+                                                Orientation="Horizontal">
+                                        <TextBlock Foreground="Black"
+                                                   TextAlignment="Left"
+                                                   Margin="0 3.5"
+                                                   Text="To: " />
+                                        <TextBlock Foreground="Black"
+                                                   TextAlignment="Left"
+                                                   Margin="0 3.5"
+                                                   Text="{Binding Station.stationName}" />
+
+                                    </StackPanel>
+
+                                </StackPanel>
+
+                            </DockPanel>
+                        </Border>
+                    </StackPanel>
+
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </ScrollViewer>
+</UserControl>

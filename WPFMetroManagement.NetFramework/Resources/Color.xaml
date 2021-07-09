@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:WPFMetroManagement.NetFramework.Resources">
+    
+    <SolidColorBrush x:Key="Primary"
+                     Color="#FF1976D2" />
+    <SolidColorBrush x:Key="LightBlue"
+                     Color="#3992b8" />
+    <SolidColorBrush x:Key="GreenNavy"
+                     Color="#33414E" />
+</ResourceDictionary>

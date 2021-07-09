@@ -1,0 +1,228 @@
+﻿<UserControl x:Class="WPFMetroManagement.NetFramework.UserControls.TicketSellingUC"
+             x:Name="ticketSellingUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WPFMetroManagement.NetFramework.UserControls"
+             mc:Ignorable="d"
+             xmlns:uc="clr-namespace:WPFMetroManagement.NetFramework.UserControls"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             Background="White"
+             d:DesignHeight="600"
+             d:DesignWidth="1000"
+             DataContext="{StaticResource TicketVM}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <DockPanel LastChildFill="True"
+                       DockPanel.Dock="Right"
+                   Grid.Column="1"
+                       Background="White">
+                <materialDesign:ColorZone Width="auto"
+                                          Margin="10"
+                                          Padding="8,4,8,4"
+                                          Panel.ZIndex="1"
+                                          materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                          CornerRadius="6"
+                                          DockPanel.Dock="Top"
+                                          Mode="Standard">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button Command="{Binding SearchCommand}"
+                                CommandParameter="{Binding ElementName=plnShowLine}"
+                                Style="{DynamicResource MaterialDesignToolButton}">
+                            <materialDesign:PackIcon Kind="DatabaseSearch"
+                                                     Opacity=".56" />
+                        </Button>
+                        <TextBox Grid.Column="1"
+                                 MinWidth="200"
+                                 Margin="8,0,0,0"
+                                 VerticalAlignment="Center"
+                                 materialDesign:HintAssist.Hint="Search Line by name..."
+                                 materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                                 BorderThickness="0"
+                                 Text="{Binding txtSearchLine, UpdateSourceTrigger=PropertyChanged}" />
+                    </Grid>
+                </materialDesign:ColorZone>
+
+                <ScrollViewer Margin="5"
+                              Padding="10,0,10,0"
+                              Width="auto">
+                <DataGrid x:Name="dataLine"
+                          VerticalContentAlignment="Top"
+                          AutoGenerateColumns="False"
+                          Background="Transparent"
+                          CanUserAddRows="False"
+                          CanUserSortColumns="True"
+                          HeadersVisibility="All"
+                          HorizontalScrollBarVisibility="Auto"
+                          IsReadOnly="True"
+                          SelectedIndex="0"
+                          ItemsSource="{Binding ListLine, UpdateSourceTrigger=PropertyChanged}"
+                          SelectedItem="{Binding SelectedLine, UpdateSourceTrigger=PropertyChanged}">
+                    <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding id}"
+                                                Header="ID"
+                                                IsReadOnly="False"
+                                                Width="auto" />
+                            <DataGridTextColumn Binding="{Binding Company.name}"
+                                                Header="Com name"
+                                                IsReadOnly="False"
+                                                Width="auto" />
+                            <DataGridTextColumn Binding="{Binding lineName}"
+                                                Header="Name"
+                                                IsReadOnly="False"
+                                                Width="auto" />
+                            <DataGridTextColumn Binding="{Binding Station1.stationName}"
+                                                Header="Station Start"
+                                                IsReadOnly="False"
+                                                Width="auto" />
+                            <DataGridTextColumn Binding="{Binding Station.stationName}"
+                                                Header="Staion End"
+                                                IsReadOnly="False"
+                                                Width="auto" />
+                            <DataGridTextColumn Binding="{Binding lineType}"
+                                                Header="Type"
+                                                IsReadOnly="False"
+                                                Width="auto" />
+                            <DataGridTextColumn Binding="{Binding openTime}"
+                                                Header="Open"
+                                                IsReadOnly="False"
+                                                Width="auto" />
+                            <DataGridTextColumn Binding="{Binding awTime}"
+                                                Header="Waiting"
+                                                IsReadOnly="False"
+                                                Width="auto" />
+                            <DataGridTextColumn Binding="{Binding closeTime}"
+                                                Header="Close"
+                                                IsReadOnly="False"
+                                                Width="auto" />
+                            <DataGridTextColumn Binding="{Binding statusLine}"
+                                                Header="Status"
+                                                IsReadOnly="False"
+                                                Width="auto" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </ScrollViewer>
+            </DockPanel>
+
+        <DockPanel LastChildFill="True"
+                   Grid.Column="0">
+            <TextBlock DockPanel.Dock="Top"
+                       Background="White"
+                       Style="{StaticResource MaterialDesignHeadline4TextBlock}"
+                       Text="Ticket Selling"
+                       Margin="20"
+                       Foreground="{StaticResource LightBlue}"
+                       FontWeight="DemiBold"
+                       FontFamily="Bahnschrift"
+                       HorizontalAlignment="Center" />
+
+            <Grid x:Name="GridEvent">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="auto"></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0"
+                           FontSize="30"
+                           Margin="40 0 0 0"
+                           VerticalAlignment="Center"
+                           Text="{Binding txtLineName, UpdateSourceTrigger=PropertyChanged}" />
+
+                <Border Grid.Row="1"
+                        CornerRadius="50">
+                    <StackPanel>
+                        <ComboBox x:Name="cbbTicketType"
+                                  Margin="20"
+                                  Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                  IsEnabled="True"
+                                  materialDesign:HintAssist.Hint="Ticket Type"
+                                  SelectedItem="{Binding txtTicketType, UpdateSourceTrigger=PropertyChanged}">
+                            <ComboBoxItem Content="Regular" />
+                            <ComboBoxItem Content="Monthly" />
+                        </ComboBox>
+
+                        <TextBox materialDesign:HintAssist.Hint="Number of ticket creating...(1 -> 100)"
+                                 Margin="20 20 20 10"
+                                 FontSize="18"
+                                 Text="{Binding txtNumberCreate, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 VerticalAlignment="Center" />
+
+                        <TextBox materialDesign:HintAssist.Hint="Price of ticket creating..."
+                                 Margin="20 20 20 10"
+                                 FontSize="18"
+                                 Text="{Binding txtPriceCreate, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 VerticalAlignment="Center" />
+
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                                materialDesign:ButtonAssist.CornerRadius="10"
+                                Margin="10"
+                                CommandParameter="{Binding ElementName=GridEvent}"
+                                Command="{Binding CreateCommand}"
+                                Content="Create Ticket"
+                                ToolTip="Create ticket"
+                                HorizontalAlignment="Center"
+                                FontSize="20"
+                                Background="OrangeRed"
+                                BorderBrush="OrangeRed"
+                                FontFamily="Bahnschrift"
+                                Foreground="White"
+                                FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="2"
+                        CornerRadius="50">
+                    <StackPanel>
+
+                        <TextBox materialDesign:HintAssist.Hint="Price update..."
+                                 Margin="20 20 20 10"
+                                 FontSize="18"
+                                 Text="{Binding txtPriceUpdate, UpdateSourceTrigger=PropertyChanged}"
+                                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                 VerticalAlignment="Center" />
+
+                        <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                                materialDesign:ButtonAssist.CornerRadius="10"
+                                CommandParameter="{Binding ElementName=GridEvent}"
+                                Margin="10"
+                                Command="{Binding UpdateCommand}"
+                                Content="Update Price"
+                                ToolTip="Update Price"
+                                HorizontalAlignment="Center"
+                                FontSize="20"
+                                Background="LawnGreen"
+                                BorderBrush="LawnGreen"
+                                FontFamily="Bahnschrift"
+                                Foreground="Black"
+                                FontWeight="Bold" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+        </DockPanel>
+
+        <!--</Border>-->
+
+    </Grid>
+</UserControl>

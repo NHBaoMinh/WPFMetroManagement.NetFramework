@@ -1,0 +1,54 @@
+﻿<UserControl x:Class="WPFMetroManagement.NetFramework.UserControls.ContactUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WPFMetroManagement.NetFramework.UserControls"
+             mc:Ignorable="d" 
+             
+             Background="Transparent"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="38"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             FontFamily="{DynamicResource MaterialDesignFont}">
+
+    <Border Background="White"
+            CornerRadius="15"
+            materialDesign:ShadowAssist.Darken="True">
+        <Grid>
+            <StackPanel>
+                <TextBlock Name="textblock1"
+                           Margin="150 150 150 50"
+                           HorizontalAlignment="Center"
+                           FontSize="80"
+                           FontWeight="DemiBold"
+                           Foreground="{StaticResource LightBlue}"
+                           FontFamily="Bauhaus 93" TextWrapping="Wrap">CONTACT US FOR ISSUE</TextBlock>
+                <TextBox TextWrapping="Wrap"
+                         Margin="60 0 60 60"
+                         VerticalAlignment="Stretch"
+                         MinWidth="280"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         SpellCheck.IsEnabled="True"
+                         materialDesign:HintAssist.Hint="Write down the problem or your change request here. We will always listen!"
+                         Text=""
+                         materialDesign:TextFieldAssist.UnderlineBrush="Gray"/>
+                <Grid Width="auto" HorizontalAlignment="Right" Margin="20">
+                    <Button Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                            Height="40"
+                            materialDesign:ButtonAssist.CornerRadius="13"
+                            ToolTip="Send Report"
+                            Background="{StaticResource LightBlue}"
+                            BorderBrush="{StaticResource LightBlue}">
+                        <TextBlock Text="SEND" FontSize="25"/>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

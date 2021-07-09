@@ -1,0 +1,331 @@
+﻿<UserControl x:Class="WPFMetroManagement.NetFramework.UserControls.StationUC"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WPFMetroManagement.NetFramework.UserControls"
+             mc:Ignorable="d"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Foreground="White"
+             Background="Transparent"
+             FontFamily="{DynamicResource MaterialDesignFont}"
+             DataContext="{StaticResource StationVM}">
+    
+    <DockPanel>
+
+        <materialDesign:Card Width="426"
+                             Margin="5"
+                             DockPanel.Dock="Right"
+                             Tag="{Binding IDStation, UpdateSourceTrigger=PropertyChanged}">
+            <DockPanel Width="426"
+                       LastChildFill="True"
+                       Background="{StaticResource GreenNavy}">
+                <TextBlock Margin="10"
+                           DockPanel.Dock="Top"
+                           FontSize="38"
+                           HorizontalAlignment="Center"
+                           Text="Station Selected Detail"
+                           FontFamily="Bahnschrift SemiLight" />
+
+                <DockPanel Margin="0,20,0,0">
+
+                    <TextBlock Margin="0,10,0,0"
+                               HorizontalAlignment="Center"
+                               DockPanel.Dock="Top"
+                               FontSize="20">
+                        - S T A T I O N -
+                    </TextBlock>
+
+                    <DockPanel DockPanel.Dock="Top">
+                        <DockPanel x:Name="pnlStationInformation">
+                            <DockPanel Margin="10"
+                                       DockPanel.Dock="Right">
+
+                                <WrapPanel DockPanel.Dock="Top">
+                                    <materialDesign:PopupBox x:Name="popupAddStation"
+                                                             Width="0"
+                                                             Height="0"
+                                                             PlacementMode="LeftAndAlignTopEdges"
+                                                             StaysOpen="True">
+                                        <StackPanel Margin="10">
+                                            <TextBlock HorizontalAlignment="Center"
+                                                       FontSize="20">
+                                                Add new Station
+                                            </TextBlock>
+                                            <WrapPanel Margin="10">
+                                                <materialDesign:PackIcon ToolTip="Station ID"
+                                                                         Width="24"
+                                                                         Height="24"
+                                                                         Margin="10,6,0,0"
+                                                                         Kind="Artstation" />
+                                                <TextBlock MinWidth="308"
+                                                           materialDesign:HintAssist.HelperText="Station ID"
+                                                           materialDesign:HintAssist.Hint="Station ID"
+                                                           Text="{Binding txtAddStationID, UpdateSourceTrigger=PropertyChanged}"
+                                                           FontSize="15" />
+                                            </WrapPanel>
+                                            <WrapPanel Margin="10">
+                                                <materialDesign:PackIcon ToolTip="Station Name"
+                                                                         Width="24"
+                                                                         Height="24"
+                                                                         Margin="10,6,0,0"
+                                                                         Kind="Identifier" />
+                                                <TextBox MinWidth="308"
+                                                         materialDesign:HintAssist.HelperText="Station Name"
+                                                         materialDesign:HintAssist.Hint="Station Name"
+                                                         Text="{Binding txtAddStationName, UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="15" />
+                                            </WrapPanel>
+                                            <WrapPanel Margin="10">
+                                                <materialDesign:PackIcon ToolTip="Location Description"
+                                                                         Width="24"
+                                                                         Height="24"
+                                                                         Margin="10,6,0,0"
+                                                                         Kind="LocationEnter" />
+                                                <TextBox MinWidth="308"
+                                                         materialDesign:HintAssist.HelperText="Location Description"
+                                                         materialDesign:HintAssist.Hint="Location"
+                                                         Text="{Binding txtAddStationLocation, UpdateSourceTrigger=PropertyChanged}"
+                                                         FontSize="15" />
+                                            </WrapPanel>
+                                            <WrapPanel Margin="10">
+                                                <materialDesign:PackIcon ToolTip="Status"
+                                                                         Width="24"
+                                                                         Height="24"
+                                                                         Margin="10,6,0,0"
+                                                                         Kind="ListStatus" />
+                                                <ComboBox x:Name="cbbStatus"
+                                                          Style="{StaticResource MaterialDesignOutlinedComboBox}"
+                                                          IsEnabled="True"
+                                                          materialDesign:HintAssist.Hint="Status of station"
+                                                          SelectedItem="{Binding txtAddStationStatus, UpdateSourceTrigger=PropertyChanged}"
+                                                          Width="auto">
+                                                    <ComboBoxItem Content="Normal"></ComboBoxItem>
+                                                    <ComboBoxItem Content="Under Repair"></ComboBoxItem>
+                                                    <ComboBoxItem Content="Decommissioned"></ComboBoxItem>
+                                                </ComboBox>
+                                            </WrapPanel>
+                                            <DockPanel>
+                                                <Button Width="150"
+                                                        Margin="10"
+                                                        Background="{StaticResource LightBlue}"
+                                                        BorderBrush="{StaticResource LightBlue}"
+                                                        Command="{Binding SaveAddingStationCommand}"
+                                                        CommandParameter="{Binding ElementName=popupAddStation}"
+                                                        DockPanel.Dock="Right"
+                                                        Style="{StaticResource MaterialDesignRaisedDarkButton}">
+                                                    Add Station
+                                                </Button>
+                                                <Grid />
+                                            </DockPanel>
+                                        </StackPanel>
+                                    </materialDesign:PopupBox>
+
+                                    <Button Width="30"
+                                            Height="30"
+                                            Margin="2"
+                                            Foreground="{StaticResource GreenNavy}"
+                                            Background="DarkOrange"
+                                            BorderBrush="{StaticResource GreenNavy}"
+                                            materialDesign:ButtonProgressAssist.IsIndeterminate="{Binding IsPopupOpen, ElementName=popupAddStation}"
+                                            materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                            materialDesign:ButtonProgressAssist.Value="-1"
+                                            Command="{Binding AddCommand}"
+                                            CommandParameter="{Binding ElementName=popupAddStation}"
+                                            Content="{materialDesign:PackIcon Kind=PlusThick}"
+                                            DockPanel.Dock="Top"
+                                            Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                            ToolTip="Add Station"
+                                            ToolTipService.Placement="Right" />
+                                </WrapPanel>
+
+                                <Button Width="30"
+                                        Height="30"
+                                        Margin="2,10,2,2"
+                                        Background="{StaticResource LightBlue}"
+                                        BorderBrush="{StaticResource LightBlue}"
+                                        materialDesign:ButtonProgressAssist.IsIndeterminate="{Binding iconUpdateStation}"
+                                        materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                                        materialDesign:ButtonProgressAssist.Value="-1"
+                                        Command="{Binding UpdateCommand}"
+                                        CommandParameter="{Binding ElementName=pnlStationInformation}"
+                                        Content="{materialDesign:PackIcon Kind=CircleEditOutline}"
+                                        DockPanel.Dock="Top"
+                                        Style="{StaticResource MaterialDesignFloatingActionButton}"
+                                        ToolTip="Update Station"
+                                        ToolTipService.Placement="Right" />
+                                <Grid />
+                            </DockPanel>
+
+                            <StackPanel Margin="20,5,5,5"
+                                        DockPanel.Dock="Top"
+                                        Orientation="Horizontal">
+                                <TextBlock Margin="0,3.5"
+                                           FontSize="15"
+                                           Text="Station Id: " />
+                                <TextBlock Margin="0,3.5"
+                                           FontSize="15"
+                                           Text="{Binding txtUpdateStationID}" />
+                                <TextBlock MinWidth="226.5"
+                                           Margin="0,3.5"
+                                           FontSize="15"
+                                           MaxWidth="226.5"
+                                           Text="{Binding txtUpdateStationID, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                            <StackPanel Margin="20,5,5,5"
+                                        DockPanel.Dock="Top"
+                                        Orientation="Horizontal">
+                                <TextBlock Margin="0,3.5"
+                                           FontSize="15"
+                                           Text="Station Name: " />
+                                <TextBlock Margin="0,3.5"
+                                           FontSize="15"
+                                           Text="{Binding txtUpdateStationName, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox MinWidth="226.5"
+                                         MaxWidth="226.5"
+                                         FontSize="15"
+                                         Text="{Binding txtUpdateStationName, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                            <StackPanel Margin="20,5,5,5"
+                                        DockPanel.Dock="Top"
+                                        Orientation="Horizontal">
+                                <TextBlock Margin="0,3.5"
+                                           FontSize="15"
+                                           Text="Location Description: " />
+                                <TextBlock Margin="0,3.5"
+                                           FontSize="15"
+                                           Text="{Binding txtUpdateStationLocation, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox MinWidth="200"
+                                         MaxWidth="200"
+                                         FontSize="15"
+                                         Text="{Binding txtUpdateStationLocation, UpdateSourceTrigger=PropertyChanged}" />
+                            </StackPanel>
+                            <StackPanel Margin="20,5,5,5"
+                                        DockPanel.Dock="Top"
+                                        Orientation="Horizontal">
+                                <TextBlock Margin="0,3.5"
+                                           FontSize="15"
+                                           Text="Operating Status: " />
+                                <TextBlock MaxWidth="300"
+                                           Margin="0,3.5"
+                                           FontSize="15"
+                                           Text="{Binding txtUpdateStationStatus, UpdateSourceTrigger=PropertyChanged}"
+                                           TextWrapping="Wrap" />
+                                <ComboBox x:Name="cbbStationStatus"
+                                          materialDesign:HintAssist.Hint="Station Status"
+                                          Width="220"
+                                          FontSize="15"
+                                          Margin="0, 3.5"
+                                          SelectedItem="{Binding txtUpdateStationStatus, UpdateSourceTrigger=PropertyChanged}">
+                                    <ComboBoxItem Content="Normal" />
+                                    <ComboBoxItem Content="Under Repair" />
+                                    <ComboBoxItem Content="Decommissioned" />
+                                </ComboBox>
+
+                            </StackPanel>
+                            <Canvas Margin="10"
+                                    Visibility="Collapsed">
+                                <Button Canvas.Left="288"
+                                        Canvas.Top="-6"
+                                        Width="116"
+                                        Command="{Binding SaveUpdateCommand}"
+                                        CommandParameter="{Binding ElementName=pnlStationInformation}"
+                                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                                        ToolTip="Save Updated">
+                                    Save Changes
+                                </Button>
+                            </Canvas>
+                        </DockPanel>
+                    </DockPanel>
+
+                    <TextBlock Margin="0,40,0,20"
+                               HorizontalAlignment="Center"
+                               DockPanel.Dock="Top"
+                               FontSize="15">
+                        - I M A G E -
+                    </TextBlock>
+                    <Image Height="200"
+                           Width="auto">
+
+                    </Image>
+                </DockPanel>
+            </DockPanel>
+        </materialDesign:Card>
+
+        <DockPanel LastChildFill="True"
+                   Background="White">
+            <materialDesign:ColorZone Width="400"
+                                      Margin="10"
+                                      Padding="8,4,8,4"
+                                      Panel.ZIndex="1"
+                                      materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                      CornerRadius="6"
+                                      DockPanel.Dock="Top"
+                                      Mode="Standard">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button Command="{Binding SearchCommand}"
+                            CommandParameter="{Binding ElementName=plnShowStation}"
+                            Style="{DynamicResource MaterialDesignToolButton}">
+                        <materialDesign:PackIcon Kind="DatabaseSearch"
+                                                 Opacity=".56" />
+                    </Button>
+                    <TextBox Grid.Column="1"
+                             MinWidth="200"
+                             Margin="8,0,0,0"
+                             VerticalAlignment="Center"
+                             materialDesign:HintAssist.Hint="Search Station by name..."
+                             materialDesign:TextFieldAssist.DecorationVisibility="Hidden"
+                             BorderThickness="0"
+                             Text="{Binding txtSearchStation, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+            </materialDesign:ColorZone>
+
+            <ScrollViewer Margin="5"
+                          Padding="10,0,10,0">
+                <DataGrid x:Name="dataStation"
+                          VerticalContentAlignment="Top"
+                          AutoGenerateColumns="False"
+                          Background="Transparent"
+                          CanUserAddRows="False"
+                          CanUserSortColumns="True"
+                          HeadersVisibility="All"
+                          HorizontalScrollBarVisibility="Auto"
+                          IsReadOnly="True"
+                          SelectedIndex="0"
+                          ItemsSource="{Binding ListStation}"
+                          SelectedItem="{Binding SelectedStation, UpdateSourceTrigger=PropertyChanged}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding id}"
+                                            Header="ID"
+                                            IsReadOnly="False"
+                                            Width="auto" />
+                        <DataGridTextColumn Binding="{Binding stationName}"
+                                            Header="Name"
+                                            IsReadOnly="False"
+                                            Width="auto" />
+                        <DataGridTextColumn Binding="{Binding locationDescription}"
+                                            Header="Location"
+                                            IsReadOnly="False"
+                                            Width="auto" />
+                        <DataGridTextColumn Binding="{Binding statusStatus}"
+                                            Header="Status"
+                                            IsReadOnly="False"
+                                            Width="auto" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </ScrollViewer>
+        </DockPanel>
+    </DockPanel>
+    
+</UserControl>
